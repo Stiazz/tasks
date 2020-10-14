@@ -13,7 +13,9 @@ import java.util.Map;
 public class Table {
 
     private final Map<String, String> table;
+    //столбец, строка
     private final int column, row;
+    //Стартовый ключ с которого начинается таблица
     private final char startColumn;
 
     public Table(int column, int row, char startColumn) {
@@ -21,6 +23,16 @@ public class Table {
         this.row = row;
         this.startColumn = startColumn;
         table = new HashMap<>();
+
+        /* Цикл создает "карту" ключей 10x10;
+         *  Ключем является буква от A до J и номер от 1 до 10;
+         * */
+        for (int tRow = 1; tRow <= row; tRow++) {
+            for (char tColumn = startColumn; tColumn < startColumn + column; tColumn++) {
+                addKey(String.format("%s%d", tColumn, tRow));
+            }
+        }
+
     }
 
     public boolean addKey(String key){
@@ -49,10 +61,10 @@ public class Table {
         List<String> values;
         String[] sValue;
 
-        for (int row = 1; row < this.row ; row++) {
+        for (int tRow = 1; tRow <= row; tRow++) {
             values = new ArrayList<>();
-            for (char column = startColumn; column <= startColumn + this.column; column++) {
-                values.add(table.get(String.format("%s%d", column, row)));
+            for (char tColumn = startColumn; tColumn < startColumn + column; tColumn++) {
+                values.add(table.get(String.format("%s%d", tColumn, tRow)));
             }
             sValue = new String[values.size()];
             values.toArray(sValue);
